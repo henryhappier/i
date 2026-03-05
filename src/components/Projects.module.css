@@ -1,0 +1,85 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, border-color 0.2s;
+  cursor: default;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.folder {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.links {
+  display: flex;
+  gap: 12px;
+}
+
+.links a {
+  color: var(--text-muted) !important;
+  transition: color 0.2s;
+}
+
+.links a:hover {
+  color: var(--accent) !important;
+  opacity: 1;
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background-color: var(--bg-tertiary);
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
