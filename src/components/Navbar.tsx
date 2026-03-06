@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
+import { FiSun, FiMoon } from 'react-icons/fi';
+import { useTheme } from '../ThemeContext';
 import styles from './Navbar.module.css';
 
 const links = [
@@ -14,6 +16,7 @@ const links = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -53,13 +56,23 @@ export default function Navbar() {
           </li>
         </ul>
 
-        <button
-          className={styles.hamburger}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
-        </button>
+        <div className={styles.controls}>
+          <button
+            className={styles.themeToggle}
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
+          </button>
+
+          <button
+            className={styles.hamburger}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
+          </button>
+        </div>
       </nav>
     </header>
   );
