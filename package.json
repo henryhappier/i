@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/roboto-mono": "^5.2.8",
     "@rollup/wasm-node": "^4.59.0",
     "framer-motion": "^12.35.0",
     "react": "^19.2.0",
