@@ -1,4 +1,4 @@
-import styles from './Footer.module.css';
+import styles from "./Footer.module.css";
 
 export default function Footer() {
   return (
@@ -13,8 +13,7 @@ export default function Footer() {
           Download Resume (PDF)
         </a>
         <p className={styles.credit}>
-          Built with React + Vite &middot; Henry Ma &copy;{' '}
-          {new Date().getFullYear()}
+          🛠️ Built with ❤️ by Henry Ma &copy; {new Date().getFullYear()}
         </p>
       </div>
     </footer>

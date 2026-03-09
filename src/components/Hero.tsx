@@ -1,40 +1,65 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import styles from './Hero.module.css';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import styles from "./Hero.module.css";
 
 const roles = [
-  'Director of Engineering',
-  'Builder of High-Performance Teams',
-  'Systems Thinker',
-  'Open Source Advocate',
+  "Director of Engineering",
+  "Builder of High-Performance Teams",
+  "Systems Thinker",
+  "Fast Learner",
+  "Problem Solver",
+  "Ultimately an Engineer at Heart",
 ];
+
+type Phase = "typing" | "pausing" | "deleting";
 
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
-  const [text, setText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [text, setText] = useState("");
+  const [phase, setPhase] = useState<Phase>("typing");
 
   useEffect(() => {
     const currentRole = roles[roleIndex];
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          setText(currentRole.slice(0, text.length + 1));
-          if (text.length + 1 === currentRole.length) {
-            setTimeout(() => setIsDeleting(true), 2000);
-          }
+    let delay: number;
+
+    switch (phase) {
+      case "typing":
+        if (text.length < currentRole.length) {
+          delay = 80;
         } else {
-          setText(currentRole.slice(0, text.length - 1));
-          if (text.length === 0) {
-            setIsDeleting(false);
-            setRoleIndex((prev) => (prev + 1) % roles.length);
-          }
+          delay = 2000;
         }
-      },
-      isDeleting ? 40 : 80,
-    );
+        break;
+      case "pausing":
+        delay = 0;
+        break;
+      case "deleting":
+        delay = 40;
+        break;
+    }
+
+    const timeout = setTimeout(() => {
+      switch (phase) {
+        case "typing":
+          if (text.length < currentRole.length) {
+            setText(currentRole.slice(0, text.length + 1));
+          } else {
+            setPhase("deleting");
+          }
+          break;
+        case "deleting":
+          if (text.length > 0) {
+            setText(currentRole.slice(0, text.length - 1));
+          } else {
+            setRoleIndex((prev) => (prev + 1) % roles.length);
+            setPhase("typing");
+          }
+          break;
+      }
+    }, delay);
+
     return () => clearTimeout(timeout);
-  }, [text, isDeleting, roleIndex]);
+  }, [text, phase, roleIndex]);
 
   return (
     <section id="hero" className={styles.hero}>
@@ -73,7 +98,7 @@ export default function Hero() {
         >
           <p className={styles.subtitle}>
             I build and lead engineering teams that ship exceptional software.
-            Passionate about developer experience, scalable systems, and
+            Passionate about developer/user experiences, scalable systems, and
             nurturing engineering culture.
           </p>
         </motion.div>
