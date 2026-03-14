@@ -1,22 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "../LanguageContext";
 import styles from "./Hero.module.css";
 
-const roles = [
-  "Director of Engineering",
-  "Builder of High-Performance Teams",
-  "Systems Thinker",
-  "Fast Learner",
-  "Problem Solver",
-  "Ultimately an Engineer at Heart",
-];
-
-type Phase = "typing" | "pausing" | "deleting";
+type Phase = "typing" | "deleting";
 
 export default function Hero() {
+  const { t, tArray } = useLanguage();
+  const roles = tArray("hero.roles");
+
   const [roleIndex, setRoleIndex] = useState(0);
   const [text, setText] = useState("");
   const [phase, setPhase] = useState<Phase>("typing");
+  const prevRolesRef = useRef(roles);
+
+  useEffect(() => {
+    if (prevRolesRef.current !== roles) {
+      prevRolesRef.current = roles;
+      setRoleIndex(0);
+      setText("");
+      setPhase("typing");
+    }
+  }, [roles]);
 
   useEffect(() => {
     const currentRole = roles[roleIndex];
@@ -24,14 +29,7 @@ export default function Hero() {
 
     switch (phase) {
       case "typing":
-        if (text.length < currentRole.length) {
-          delay = 80;
-        } else {
-          delay = 2000;
-        }
-        break;
-      case "pausing":
-        delay = 0;
+        delay = text.length < currentRole.length ? 80 : 2000;
         break;
       case "deleting":
         delay = 40;
@@ -59,7 +57,7 @@ export default function Hero() {
     }, delay);
 
     return () => clearTimeout(timeout);
-  }, [text, phase, roleIndex]);
+  }, [text, phase, roleIndex, roles]);
 
   return (
     <section id="hero" className={styles.hero}>
@@ -69,7 +67,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <p className={styles.greeting}>Hi, my name is</p>
+          <p className={styles.greeting}>{t("hero.greeting")}</p>
         </motion.div>
 
         <motion.div
@@ -77,7 +75,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <h1 className={styles.name}>Henry Ma.</h1>
+          <h1 className={styles.name}>{t("hero.name")}</h1>
         </motion.div>
 
         <motion.div
@@ -96,11 +94,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <p className={styles.subtitle}>
-            I build and lead engineering teams that ship exceptional software.
-            Passionate about developer/user experiences, scalable systems, and
-            nurturing engineering culture.
-          </p>
+          <p className={styles.subtitle}>{t("hero.subtitle")}</p>
         </motion.div>
 
         <motion.div
@@ -110,10 +104,10 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 1 }}
         >
           <a href="#projects" className={styles.ctaPrimary}>
-            View My Work
+            {t("hero.ctaPrimary")}
           </a>
           <a href="#contact" className={styles.ctaSecondary}>
-            Get In Touch
+            {t("hero.ctaSecondary")}
           </a>
         </motion.div>
       </div>

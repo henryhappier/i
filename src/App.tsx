@@ -1,5 +1,6 @@
 import './App.css';
 import { ThemeProvider } from './ThemeContext';
+import { LanguageProvider } from './LanguageContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -13,17 +14,19 @@ import Footer from './components/Footer';
 export default function App() {
   return (
     <ThemeProvider>
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Blog />
-        <Contact />
-      </main>
-      <Footer />
+      <LanguageProvider>
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Blog />
+          <Contact />
+        </main>
+        <Footer />
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

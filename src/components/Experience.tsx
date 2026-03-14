@@ -1,13 +1,16 @@
 import SectionWrapper from './SectionWrapper';
-import { experiences } from '../data/experience';
+import { useLanguage } from '../LanguageContext';
 import styles from './Experience.module.css';
 
 export default function Experience() {
+  const { t, tExperience } = useLanguage();
+  const experiences = tExperience();
+
   return (
     <SectionWrapper id="experience">
       <div className="container" style={{ padding: 'var(--section-padding)' }}>
         <h2 className="section-heading">
-          <span className="number">03.</span> Experience
+          <span className="number">03.</span> {t('experience.heading')}
         </h2>
         <div className={styles.timeline}>
           {experiences.map((exp, i) => (

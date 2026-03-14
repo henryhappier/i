@@ -1,14 +1,17 @@
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
 import SectionWrapper from './SectionWrapper';
-import { projects } from '../data/projects';
+import { useLanguage } from '../LanguageContext';
 import styles from './Projects.module.css';
 
 export default function Projects() {
+  const { t, tProjects } = useLanguage();
+  const projects = tProjects();
+
   return (
     <SectionWrapper id="projects">
       <div className="container" style={{ padding: 'var(--section-padding)' }}>
         <h2 className="section-heading">
-          <span className="number">04.</span> Projects
+          <span className="number">04.</span> {t('projects.heading')}
         </h2>
         <div className={styles.grid}>
           {projects.map((project, i) => (
@@ -43,9 +46,9 @@ export default function Projects() {
               <h3 className={styles.title}>{project.title}</h3>
               <p className={styles.description}>{project.description}</p>
               <div className={styles.tech}>
-                {project.tech.map((t) => (
-                  <span key={t} className={styles.tag}>
-                    {t}
+                {project.tech.map((techItem) => (
+                  <span key={techItem} className={styles.tag}>
+                    {techItem}
                   </span>
                 ))}
               </div>

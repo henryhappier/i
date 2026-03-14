@@ -1,14 +1,17 @@
 import { FiArrowRight } from 'react-icons/fi';
 import SectionWrapper from './SectionWrapper';
-import { blogPosts } from '../data/blog';
+import { useLanguage } from '../LanguageContext';
 import styles from './Blog.module.css';
 
 export default function Blog() {
+  const { t, tBlog } = useLanguage();
+  const blogPosts = tBlog();
+
   return (
     <SectionWrapper id="blog">
       <div className="container" style={{ padding: 'var(--section-padding)' }}>
         <h2 className="section-heading">
-          <span className="number">05.</span> Blog
+          <span className="number">05.</span> {t('blog.heading')}
         </h2>
         <div className={styles.posts}>
           {blogPosts.map((post, i) => (
@@ -32,7 +35,7 @@ export default function Blog() {
               <h3 className={styles.title}>{post.title}</h3>
               <p className={styles.summary}>{post.summary}</p>
               <span className={styles.readMore}>
-                Read more <FiArrowRight size={14} />
+                {t('blog.readMore')} <FiArrowRight size={14} />
               </span>
             </a>
           ))}

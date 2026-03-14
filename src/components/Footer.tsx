@@ -1,6 +1,9 @@
+import { useLanguage } from "../LanguageContext";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className={styles.footer}>
       <div className="container">
@@ -10,10 +13,10 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Download Resume (PDF)
+          {t('footer.resumeLink')}
         </a>
         <p className={styles.credit}>
-          🛠️ Built with ❤️ by Henry Ma &copy; {new Date().getFullYear()}
+          🛠️ {t('footer.credit')} ❤️ {t('footer.creditBy')} &copy; {new Date().getFullYear()}
         </p>
       </div>
     </footer>

@@ -2,21 +2,23 @@ import { useState, useEffect } from 'react';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useTheme } from '../ThemeContext';
+import { useLanguage } from '../LanguageContext';
 import styles from './Navbar.module.css';
 
-const links = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Blog', href: '#blog' },
-  { label: 'Contact', href: '#contact' },
+const linkKeys = [
+  { key: 'nav.about', href: '#about' },
+  { key: 'nav.skills', href: '#skills' },
+  { key: 'nav.experience', href: '#experience' },
+  { key: 'nav.projects', href: '#projects' },
+  { key: 'nav.blog', href: '#blog' },
+  { key: 'nav.contact', href: '#contact' },
 ];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { lang, toggleLang, t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -32,7 +34,7 @@ export default function Navbar() {
         </a>
 
         <ul className={`${styles.links} ${menuOpen ? styles.open : ''}`}>
-          {links.map((link, i) => (
+          {linkKeys.map((link, i) => (
             <li key={link.href}>
               <a
                 href={link.href}
@@ -40,7 +42,7 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
               >
                 <span className={styles.linkNumber}>0{i + 1}.</span>
-                {link.label}
+                {t(link.key)}
               </a>
             </li>
           ))}
@@ -51,12 +53,20 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Resume
+              {t('nav.resume')}
             </a>
           </li>
         </ul>
 
         <div className={styles.controls}>
+          <button
+            className={styles.langToggle}
+            onClick={toggleLang}
+            aria-label="Toggle language"
+          >
+            {lang === 'en' ? '中' : 'EN'}
+          </button>
+
           <button
             className={styles.themeToggle}
             onClick={toggleTheme}

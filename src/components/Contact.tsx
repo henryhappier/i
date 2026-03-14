@@ -1,5 +1,6 @@
 import { FiGithub, FiLinkedin, FiMail, FiTwitter } from 'react-icons/fi';
 import SectionWrapper from './SectionWrapper';
+import { useLanguage } from '../LanguageContext';
 import styles from './Contact.module.css';
 
 const socials = [
@@ -10,20 +11,18 @@ const socials = [
 ];
 
 export default function Contact() {
+  const { t } = useLanguage();
+
   return (
     <SectionWrapper id="contact">
       <div className="container" style={{ padding: 'var(--section-padding)' }}>
         <h2 className="section-heading">
-          <span className="number">06.</span> Get In Touch
+          <span className="number">06.</span> {t('contact.heading')}
         </h2>
         <div className={styles.content}>
-          <p className={styles.text}>
-            Whether you want to discuss engineering leadership, collaborate on a
-            project, or just say hello — my inbox is always open. I'll do my
-            best to get back to you.
-          </p>
+          <p className={styles.text}>{t('contact.text')}</p>
           <a href="mailto:hello@example.com" className={styles.emailBtn}>
-            Say Hello
+            {t('contact.emailBtn')}
           </a>
           <div className={styles.socials}>
             {socials.map((social) => (
